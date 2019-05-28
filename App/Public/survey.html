@@ -87,9 +87,8 @@
             }
             $.post("/api/friends", newFriend)
             .then(function(data){
-                //need to compare scores here and then match a friend.
                 console.log("survey.html", data);
-                //modal goes here
+                //return modal goes here
             })
         });
         console.log(newFriend);
