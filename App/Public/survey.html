@@ -10,8 +10,8 @@
       crossorigin="anonymous"
     />
     <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      src="https://code.jquery.com/jquery-3.4.1.js"
+      integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
       crossorigin="anonymous"
     ></script>
     <script
@@ -22,76 +22,103 @@
   </head>
 
   <body>
-    <h1>Survey</h1>
-    <h3><strong>About You</strong></h3>
-    <h4>Name (Required)</h4>
-    <input type="text" id="name" class="form-control" required />
+    <div
+      class="jumbotron d-flex flex-column justify-content-center align-items-center"
+    >
+      <h1>Survey</h1>
+    </div>
+    <div class="d-flex flex-column justify-content-center align-items-center">
+      <h3><strong>About You</strong></h3>
+      <h4>Name (Required)</h4>
+      <input type="text" id="name" class="form-control" required />
 
-    <h4>Link to Photo Image (Required)</h4>
-    <input type="text" id="photo" class="form-control" required />
-    <h3>Question 1</h3>
-    <select id="q1">
-      <option value="1">Strongly Disagree</option>
-      <option value="2">Disagree</option>
-      <option value="3">Neutral</option>
-      <option value="4">Agree</option>
-      <option value="5">Strongly Agree</option>
-    </select>
-    <h3>Question 2</h3>
-    <select id="q2">
-      <option value="1">Strongly Disagree</option>
-      <option value="2">Disagree</option>
-      <option value="3">Neutral</option>
-      <option value="4">Agree</option>
-      <option value="5">Strongly Agree</option>
-    </select>
-    <h3>Question 3</h3>
-    <select id="q3">
-      <option value="1">Strongly Disagree</option>
-      <option value="2">Disagree</option>
-      <option value="3">Neutral</option>
-      <option value="4">Agree</option>
-      <option value="5">Strongly Agree</option>
-    </select>
-    <h3>Question 4</h3>
-    <select id="q4">
-      <option value="1">Strongly Disagree</option>
-      <option value="2">Disagree</option>
-      <option value="3">Neutral</option>
-      <option value="4">Agree</option>
-      <option value="5">Strongly Agree</option>
-    </select>
-    <h3>Question 5</h3>
-    <select id="q5">
-      <option value="1">Strongly Disagree</option>
-      <option value="2">Disagree</option>
-      <option value="3">Neutral</option>
-      <option value="4">Agree</option>
-      <option value="5">Strongly Agree</option>
-    </select>
-    <button type="submit" id="submit", class="btn btn-secondary btn-lg btn-block">Submit</button>
+      <h4>Link to Photo Image (Required)</h4>
+      <input type="text" id="photo" class="form-control" required />
+      <h3>Question 1</h3>
+      <select id="q1">
+        <option value="1">Strongly Disagree</option>
+        <option value="2">Disagree</option>
+        <option value="3">Neutral</option>
+        <option value="4">Agree</option>
+        <option value="5">Strongly Agree</option>
+      </select>
+      <h3>Question 2</h3>
+      <select id="q2">
+        <option value="1">Strongly Disagree</option>
+        <option value="2">Disagree</option>
+        <option value="3">Neutral</option>
+        <option value="4">Agree</option>
+        <option value="5">Strongly Agree</option>
+      </select>
+      <h3>Question 3</h3>
+      <select id="q3">
+        <option value="1">Strongly Disagree</option>
+        <option value="2">Disagree</option>
+        <option value="3">Neutral</option>
+        <option value="4">Agree</option>
+        <option value="5">Strongly Agree</option>
+      </select>
+      <h3>Question 4</h3>
+      <select id="q4">
+        <option value="1">Strongly Disagree</option>
+        <option value="2">Disagree</option>
+        <option value="3">Neutral</option>
+        <option value="4">Agree</option>
+        <option value="5">Strongly Agree</option>
+      </select>
+      <h3>Question 5</h3>
+      <select id="q5">
+        <option value="1">Strongly Disagree</option>
+        <option value="2">Disagree</option>
+        <option value="3">Neutral</option>
+        <option value="4">Agree</option>
+        <option value="5">Strongly Agree</option>
+      </select>
+      <button
+        type="submit"
+        id="submit"
+        ,
+        class="btn btn-secondary btn-lg btn-block"
+      >
+        Submit
+      </button>
+    </div>
+    <div>
+      <h1 id="test"></h1>
+    </div>
 
     <script type="text/javascript">
-        $("#submit").on("click", function(event){
-            event.preventDefault();
-            var newFriend = {
-                name: $("#name").val().trim(),
-                photo: $("#photo").val().trim(),
-                scores: [
-                        $("#q1").val(),
-                        $("#q2").val(),
-                        $("#q3").val(),
-                        $("#q4").val(),
-                        $("#q5").val()
-                ]
-            }
-            $.post("/api/friends", newFriend)
-            .then(function(data){
-                console.log("survey.html", data);
-                //return modal goes here
-            })
-        });
-        console.log(newFriend);
+      $("#submit").on("click", function(event) {
+        console.log($("#name").val());
+        event.preventDefault();
+        var newFriend = {
+          routeName: $("#name")
+            .val()
+            .toLowerCase(),
+          name: $("#name")
+            .val()
+            .trim(),
+          photo: $("#photo")
+            .val()
+            .trim(),
+          scores: [
+            $("#q1").val(),
+            $("#q2").val(),
+            $("#q3").val(),
+            $("#q4").val(),
+            $("#q5").val()
+          ]
+        };
+        $.post("/api/friends", newFriend)
+         .then(function(data){
+            console.log("survey.html", data);
+            //return modal goes here
+            var name = data.name;
+             $("#test").text(name);
+            console.log("2nd" + name);
+        })
+        
+      });
     </script>
   </body>
 </html>
