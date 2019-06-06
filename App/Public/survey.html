@@ -23,18 +23,19 @@
 
   <body>
     <div
-      class="jumbotron d-flex flex-column justify-content-center align-items-center"
+      class="jumbotron d-flex flex-column justify-content-center align-items-center bg-info"
     >
-      <h1>Survey</h1>
+      <h1>Friend Finder Survey!</h1>
     </div>
-    <div class="d-flex flex-column justify-content-center align-items-center">
+    <div class="d-flex flex-column justify-content-space-between align-items-center">
       <h3><strong>About You</strong></h3>
       <h4>Name (Required)</h4>
-      <input type="text" id="name" class="form-control" required />
+      <input type="text" id="name" class="form-control w-25" required />
 
       <h4>Link to Photo Image (Required)</h4>
-      <input type="text" id="photo" class="form-control" required />
+      <input type="text" id="photo" class="form-control w-25" required />
       <h3>Question 1</h3>
+      <h4>When faced with a challenge you tend to "take it slow"...</h4>
       <select id="q1">
         <option value="1">Strongly Disagree</option>
         <option value="2">Disagree</option>
@@ -43,6 +44,7 @@
         <option value="5">Strongly Agree</option>
       </select>
       <h3>Question 2</h3>
+      <h4>In times of stress you remain calm and collected...</h4>
       <select id="q2">
         <option value="1">Strongly Disagree</option>
         <option value="2">Disagree</option>
@@ -51,6 +53,10 @@
         <option value="5">Strongly Agree</option>
       </select>
       <h3>Question 3</h3>
+      <h4>
+        You have a strong desire for alone time and employ the concept of a
+        "social battery" ...
+      </h4>
       <select id="q3">
         <option value="1">Strongly Disagree</option>
         <option value="2">Disagree</option>
@@ -59,6 +65,10 @@
         <option value="5">Strongly Agree</option>
       </select>
       <h3>Question 4</h3>
+      <h4>
+        It is more important for me to be right than for me to have an easy time
+        moving about the world...
+      </h4>
       <select id="q4">
         <option value="1">Strongly Disagree</option>
         <option value="2">Disagree</option>
@@ -67,6 +77,10 @@
         <option value="5">Strongly Agree</option>
       </select>
       <h3>Question 5</h3>
+      <h4>
+        You have a strong desire to see the best in others despite how they feel
+        about you...
+      </h4>
       <select id="q5">
         <option value="1">Strongly Disagree</option>
         <option value="2">Disagree</option>
@@ -74,11 +88,14 @@
         <option value="4">Agree</option>
         <option value="5">Strongly Agree</option>
       </select>
+      <hr/>
       <button
         type="submit"
         id="submit"
         ,
-        class="btn btn-secondary btn-lg btn-block"
+        class="btn btn-secondary w-25 btn-block"
+        data-toggle="modal" 
+        data-target="#matchModal"
       >
         Submit
       </button>
@@ -86,6 +103,27 @@
     <div>
       <h1 id="test"></h1>
     </div>
+
+    <div class="modal fade" id="matchModal" tabindex="-1" role="dialog" aria-labelledby="matchModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="matchModalLabel"><span id="matchName"></span></h5>
+                  <div class="modal-body">
+                  <div id="matchImage"></div>
+                  </div>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                
+                <div class="modal-footer">
+                        
+                  <button type="button" id="redirect" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+          </div>
+        </div>
 
     <script type="text/javascript">
       $("#submit").on("click", function(event) {
@@ -110,14 +148,16 @@
           ]
         };
         $.post("/api/friends", newFriend)
-         .then(function(data){
-            console.log("survey.html", data);
-            //return modal goes here
-            var name = data.name;
-             $("#test").text(name);
-            console.log("2nd" + name);
-        })
+        .then(function(data) {
+          //return that friends information in a modal
+          var name = data.name;
+          $("#matchName").html(name);
+          $("#matchImage").html(`<img src=${data.photo} alt="image" height="100" width="100"></img>`);
+        });
         
+      });
+      $("#redirect").on("click", function(event) {
+        window.location.href = "./";
       });
     </script>
   </body>

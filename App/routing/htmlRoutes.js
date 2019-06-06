@@ -1,6 +1,6 @@
-var express = require("express");
-var router = express.Router();
-var path = require("path");
+const express = require("express");
+const router = express.Router();
+const path = require("path");
 
 router.use(function (req, res, next) {
     console.log('Time:', Date.now())
@@ -14,10 +14,5 @@ router.get("/", function(req, res) {
   router.get("/survey", function(req, res) {
     res.sendFile(path.join(__dirname, "../Public/survey.html"));
   });
-
-  // router.get("*", function(req, res) {
-  //   res.sendFile(path.join(__dirname, "../Public/home.html"));
-  // });
-
 
 module.exports = router;
